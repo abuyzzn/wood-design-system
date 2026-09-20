@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خيارات نشر النظام</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .option-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .option-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .option-steps {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .step {
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .step:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .option-cost {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .option-difficulty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.3s;
+            width: 100%;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .recommendation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .recommendation-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 5px;
+        }
+
+        .recommendation-text {
+            color: #856404;
+            font-size: 14px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .check {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .cross {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 12px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 خيارات نشر النظام</h1>
+            <p class="subtitle">اختر أفضل طريقة لنشر نظام متابعة خطة الإنقاذ</p>
+        </header>
+
+        <div class="recommendation">
+            <div class="recommendation-title">💡 التوصية الأفضل:</div>
+            <div class="recommendation-text">
+                للإنتاج: استخدم خادماً سحابياً (Heroku أو Railway)
+                <br>للتطوير: استخدم الكمبيوتر المحلي أو VPS صغير
+            </div>
+        </div>
+
+        <div class="options-grid">
+            <!-- Option 1: Local Machine -->
+            <div class="option-card">
+                <div class="option-icon">💻</div>
+                <div class="option-title">الكمبيوتر المحلي</div>
+                <div class="option-desc">
+                    شغّل النظام على جهازك الشخصي للاختبار والتطوير
+                </div>
+                <div class="option-cost">مجاني تماماً</div>
+                <div class="option-steps">
+                    <div class="step">ثبّت Node.js من nodejs.org</div>
+                    <div class="step">استخرج ملفات المشروع</div>
+                    <div class="step">npm install</div>
+                    <div class="step">npm start</div>
+                    <div class="step">افتح localhost:3000</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐☆☆☆</span>
+                </div>
+                <button class="btn" onclick="alert('اتبع الخطوات أعلاه')">ابدأ الآن</button>
+            </div>
+
+            <!-- Option 2: Heroku -->
+            <div class="option-card">
+                <div class="option-icon">☁️</div>
+                <div class="option-title">Heroku (الأسهل)</div>
+                <div class="option-desc">
+                    منصة سحابية موثوقة وسهلة الاستخدام للإنتاج
+                </div>
+                <div class="option-cost">مجاني + خيارات مدفوعة</div>
+                <div class="option-steps">
+                    <div class="step">أنشئ حساب على heroku.com</div>
+                    <div class="step">ثبّت Heroku CLI</div>
+                    <div class="step">heroku login</div>
+                    <div class="step">heroku create app-name</div>
+                    <div class="step">git push heroku main</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐⭐☆☆</span>
+                </div>
+                <button class="btn" onclick="window.open('https://heroku.com')">زيارة Heroku</button>
+            </div>
+
+            <!-- Option 3: Railway -->
+            <div class="option-card">
+                <div class="option-icon">🚂</div>
+                <div class="option-title">Railway (المفضل)</div>
+                <div class="option-desc">
+                    منصة سحابية حديثة وسريعة وأرخص من Heroku
+                </div>
+                <div class="option-cost">مجاني + خيارات مدفوعة</div>
+                <div class="option-steps">
+                    <div class="step">سجّل على railway.app</div>
+                    <div class="step">رابط GitHub أو أرفع الملفات</div>
+                    <div class="step">حدد Node.js كـ Runtime</div>
+                    <div class="step">اضبط متغيرات البيئة</div>
+                    <div class="step">انشر تلقائياً</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐☆☆☆</span>
+                </div>
+                <button class="btn" onclick="window.open('https://railway.app')">زيارة Railway</button>
+            </div>
+
+            <!-- Option 4: VPS -->
+            <div class="option-card">
+                <div class="option-icon">🖥️</div>
+                <div class="option-title">VPS خادم افتراضي</div>
+                <div class="option-desc">
+                    كامل التحكم على خادم منفصل (DigitalOcean, Linode)
+                </div>
+                <div class="option-cost">5-30 دولار/شهر</div>
+                <div class="option-steps">
+                    <div class="step">أشتر VPS من DigitalOcean</div>
+                    <div class="step">اتصل عبر SSH</div>
+                    <div class="step">ثبّت Node.js و pm2</div>
+                    <div class="step">ارفع ملفات المشروع</div>
+                    <div class="step">شغّل النظام</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐⭐⭐☆</span>
+                </div>
+                <button class="btn" onclick="window.open('https://digitalocean.com')">زيارة DigitalOcean</button>
+            </div>
+
+            <!-- Option 5: Docker -->
+            <div class="option-card">
+                <div class="option-icon">🐳</div>
+                <div class="option-title">Docker Container</div>
+                <div class="option-desc">
+                    حاوية قابلة للنقل تعمل على أي خادم
+                </div>
+                <div class="option-cost">مجاني (على VPS مدفوع)</div>
+                <div class="option-steps">
+                    <div class="step">ثبّت Docker</div>
+                    <div class="step">أنشئ Dockerfile</div>
+                    <div class="step">docker build -t app .</div>
+                    <div class="step">docker run -p 3000:3000 app</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                </div>
+                <button class="btn" onclick="alert('يحتاج معرفة متقدمة بـ Docker')">المزيد</button>
+            </div>
+
+            <!-- Option 6: GitHub Pages -->
+            <div class="option-card">
+                <div class="option-icon">🐙</div>
+                <div class="option-title">GitHub Pages</div>
+                <div class="option-desc">
+                    مجاني تماماً لكن يحتاج backend منفصل (لا يدعم Node.js مباشرة)
+                </div>
+                <div class="option-cost">مجاني</div>
+                <div class="option-steps">
+                    <div class="step">أنشئ repository على GitHub</div>
+                    <div class="step">ارفع ملفات HTML/CSS/JS</div>
+                    <div class="step">فعّل GitHub Pages</div>
+                    <div class="step">استخدم API منفصل للبيانات</div>
+                </div>
+                <div class="option-difficulty">
+                    <span>الصعوبة:</span>
+                    <span class="stars">⭐⭐⭐☆☆</span>
+                </div>
+                <button class="btn" onclick="alert('محدود بدون backend')">المزيد</button>
+            </div>
+        </div>
+
+        <h2 style="color: white; text-align: center; margin-top: 40px; margin-bottom: 20px;">📊 مقارنة الخيارات</h2>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>المنصة</th>
+                    <th>التكلفة</th>
+                    <th>الصعوبة</th>
+                    <th>السرعة</th>
+                    <th>الموثوقية</th>
+                    <th>التوصية</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>الكمبيوتر المحلي</strong></td>
+                    <td>مجاني</td>
+                    <td>⭐⭐</td>
+                    <td>سريع</td>
+                    <td>عالية</td>
+                    <td>للتطوير</td>
+                </tr>
+                <tr>
+                    <td><strong>Railway</strong></td>
+                    <td>مجاني/مدفوع</td>
+                    <td>⭐⭐</td>
+                    <td>سريع جداً</td>
+                    <td>عالية جداً</td>
+                    <td class="check">✓ الأفضل</td>
+                </tr>
+                <tr>
+                    <td><strong>Heroku</strong></td>
+                    <td>مدفوع</td>
+                    <td>⭐⭐⭐</td>
+                    <td>سريع</td>
+                    <td>عالية</td>
+                    <td>بديل</td>
+                </tr>
+                <tr>
+                    <td><strong>VPS</strong></td>
+                    <td>5-30$/شهر</td>
+                    <td>⭐⭐⭐⭐</td>
+                    <td>سريع جداً</td>
+                    <td>عالية جداً</td>
+                    <td>للشركات</td>
+                </tr>
+                <tr>
+                    <td><strong>Docker</strong></td>
+                    <td>مجاني/مدفوع</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>سريع</td>
+                    <td>عالية</td>
+                    <td>متقدم</td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Pages</strong></td>
+                    <td>مجاني</td>
+                    <td>⭐⭐⭐</td>
+                    <td>سريع</td>
+                    <td>متوسطة</td>
+                    <td class="cross">✗ محدود</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <h3>🎯 خطوات التشغيل السريعة:</h3>
+            <p style="margin-top: 15px;">
+                <strong>للبدء الفوري على جهازك:</strong><br>
+                1. ثبّت Node.js<br>
+                2. npm install<br>
+                3. npm start<br>
+                4. افتح http://localhost:3000
+            </p>
+            <p style="margin-top: 20px;">
+                <strong>للنشر على الويب:</strong><br>
+                استخدم Railway (الأسهل والأسرع والأرخص)
+            </p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                البريد: abuyzzn@gmail.com | الإصدار: 1.0.0 | 2026-09-20
+            </p>
+        </div>
+    </div>
+</body>
+</html>

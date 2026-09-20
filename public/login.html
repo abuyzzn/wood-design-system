@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التحكم - شركة التصميم الخشبي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .system-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-input {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            font-size: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-grid .form-group:nth-child(1) {
+            grid-column: 1 / -1;
+        }
+
+        .form-grid .form-group:nth-child(2) {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .demo-credentials {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .demo-credentials p {
+            margin-bottom: 8px;
+        }
+
+        .demo-credentials strong {
+            color: #667eea;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            .company-name {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <div class="company-name">🏭 شركة التصميم الخشبي</div>
+            <div class="system-name">نظام متابعة خطة الإنقاذ</div>
+        </div>
+
+        <div class="error" id="errorMsg"></div>
+
+        <form id="loginForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="user">المستخدم</label>
+                    <select id="user" required>
+                        <option value="">اختر المستخدم</option>
+                        <option value="owner">المالك</option>
+                        <option value="factory_manager">مدير المصنع</option>
+                        <option value="production_manager">مدير الإنتاج</option>
+                        <option value="finance">المالية</option>
+                        <option value="sales">المبيعات</option>
+                        <option value="inventory">المخزون والمشتريات</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور (4 أرقام)</label>
+                    <input type="password" id="password" class="password-input" placeholder="0000" maxlength="4" inputmode="numeric" required>
+                </div>
+            </div>
+
+            <button type="submit">دخول</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="javascript:showPasswordReset()">نسيت كلمة المرور؟</a>
+        </div>
+
+        <div class="demo-credentials">
+            <p><strong>بيانات التجربة:</strong></p>
+            <p>المالك: <strong>0000</strong></p>
+            <p>مدير المصنع: <strong>0001</strong></p>
+            <p>مدير الإنتاج: <strong>0011</strong></p>
+            <p>المالية: <strong>0010</strong></p>
+            <p>المبيعات: <strong>0100</strong></p>
+            <p>المخزون: <strong>0101</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Map usernames to actual usernames in database
+        const userMap = {
+            'owner': 'owner',
+            'factory_manager': 'factory_manager',
+            'production_manager': 'production_manager',
+            'finance': 'finance',
+            'sales': 'sales',
+            'inventory': 'inventory'
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = userMap[document.getElementById('user').value];
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                showError('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    showError(data.error || 'خطأ في بيانات الدخول');
+                }
+            } catch (error) {
+                showError('حدث خطأ في الاتصال');
+            }
+        });
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 5000);
+        }
+
+        function showPasswordReset() {
+            alert('سيتم إرسال تعليمات الاستعادة إلى البريد المسجل:\nabuyzzn@gmail.com\n\nبرجاء التواصل مع المالك لاستعادة كلمة المرور');
+        }
+
+        // Allow numeric input only in password field
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
