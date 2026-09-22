@@ -516,7 +516,7 @@ app.get('/api/metrics', isAuthenticated, (req, res) => {
 app.use(express.static('public'));
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`النظام يعمل على http://localhost:${PORT}`);
   console.log('اسم الشركة: شركة التصميم الخشبي الصناعية');
   console.log('بيانات الدخول الافتراضية:');
