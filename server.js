@@ -182,6 +182,11 @@ function hasPermission(allowedRoles) {
   };
 }
 
+// Routes - Default redirect to login
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+
 // Routes - Login
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
