@@ -7,6 +7,7 @@ WORKDIR /app
 # انسخ ملفات المشروع
 COPY package*.json ./
 COPY server.js ./
+COPY wood_design.db ./
 COPY public/ ./public/
 
 # ثبّت المكتبات
