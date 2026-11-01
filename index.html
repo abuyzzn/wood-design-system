@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بكس ديزاين · المجلة الإلكترونية 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0DA8B1;--ink:#111314;--ink2:#3A3E40;--mute:#6E7375;--line:#E2E0DB;--bg:#EAE7E1;--bar:#FFFFFF;
+  --ar:"IBM Plex Sans Arabic","Montserrat",system-ui,sans-serif;--en:"Montserrat","IBM Plex Sans Arabic",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--ar);color:var(--ink);-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;user-select:none;-webkit-user-drag:none}
+
+/* top bar */
+.top{position:fixed;top:0;right:0;left:0;height:58px;background:var(--bar);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 18px;z-index:20}
+.top .logo{height:30px}
+.top .ttl{display:flex;flex-direction:column;line-height:1.2;margin-inline-start:4px}
+.top .ttl b{font-weight:600;font-size:14px}
+.top .ttl span{font:500 10.5px var(--en);letter-spacing:.14em;color:var(--mute);direction:ltr;text-align:right}
+.top .sp{flex:1}
+.tbtn{display:flex;align-items:center;gap:7px;height:36px;padding:0 12px;border-radius:18px;font-size:13px;font-weight:500;color:var(--ink2);transition:background .2s}
+.tbtn:hover{background:#F2F0EC}
+.tbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tbtn.primary{background:var(--ink);color:#fff}
+.tbtn.primary:hover{background:#2a2d2e}
+[hidden]{display:none!important}
+
+/* stage */
+.stage{position:fixed;top:58px;bottom:64px;right:0;left:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y}
+.book{position:relative;direction:ltr;perspective:2600px;transition:transform .55s cubic-bezier(.3,.1,.2,1)}
+.book::before{content:"";position:absolute;inset:2% 1% -1.5%;background:rgba(0,0,0,.18);filter:blur(18px);z-index:-1;border-radius:4px;transition:left .55s,right .55s}
+.book.closed-start::before{right:51%}
+.book.closed-end::before{left:51%}
+.leaf{position:absolute;top:0;left:0;width:50%;height:100%;transform-origin:100% 50%;transform-style:preserve-3d;transition:transform .78s cubic-bezier(.32,.08,.22,1)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:#fff;cursor:pointer}
+.face.back{transform:rotateY(180deg)}
+.face img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.face img.ok{opacity:1}
+.face.front::after{content:"";position:absolute;top:0;bottom:0;right:0;width:9%;background:linear-gradient(to left,rgba(0,0,0,.16),rgba(0,0,0,0));pointer-events:none}
+.face.back::after{content:"";position:absolute;top:0;bottom:0;left:0;width:9%;background:linear-gradient(to right,rgba(0,0,0,.16),rgba(0,0,0,0));pointer-events:none}
+.face.blank{background:#F6F4F0;cursor:default}
+.face .shade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .78s}
+.leaf.moving .shade{opacity:.10}
+
+/* single page mode */
+.single{position:relative;direction:ltr;perspective:2200px}
+.single .pg{position:absolute;inset:0;background:#fff;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18);backface-visibility:hidden;-webkit-backface-visibility:hidden;transform-origin:100% 50%}
+.single .pg img{width:100%;height:100%;opacity:0;transition:opacity .3s}
+.single .pg img.ok{opacity:1}
+
+/* hotspots */
+.hot{position:absolute;display:block;border-radius:3px;z-index:3}
+@media (hover:hover){.hot:hover{background:rgba(13,168,177,.14);outline:1.5px solid rgba(13,168,177,.55)}}
+
+/* side arrows */
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;z-index:10;transition:opacity .2s}
+.arrow svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow.next{left:18px}
+.arrow.prev{right:18px}
+.arrow:disabled{opacity:0;pointer-events:none}
+
+/* bottom bar */
+.bottom{position:fixed;bottom:0;right:0;left:0;height:64px;background:var(--bar);border-top:1px solid var(--line);display:flex;align-items:center;gap:16px;padding:0 22px;z-index:20}
+.count{font:500 13px var(--ar);color:var(--ink2);white-space:nowrap;min-width:120px}
+.count b{font:600 14px var(--en);color:var(--ink)}
+.range{flex:1;direction:rtl;accent-color:var(--teal);height:4px}
+.sec{font:500 12.5px var(--ar);color:var(--mute);white-space:nowrap;min-width:150px;text-align:left}
+
+/* drawers */
+.scrim{position:fixed;inset:0;background:rgba(17,19,20,.42);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;right:0;width:min(380px,92vw);background:#fff;z-index:31;transform:translateX(105%);transition:transform .3s cubic-bezier(.3,.1,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer.wide{width:min(620px,96vw)}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.dh h2{font-size:18px;font-weight:700}
+.dh h2 span{display:block;font:500 10.5px var(--en);letter-spacing:.16em;color:var(--teal);margin-bottom:3px;direction:ltr;text-align:right}
+.x{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.x:hover{background:#F2F0EC}
+.x svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
+.db{overflow:auto;flex:1;padding:6px 20px 24px}
+.toc a{display:grid;grid-template-columns:30px 1fr 34px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;cursor:pointer}
+.toc a:hover .t{color:var(--teal)}
+.toc .n{font:500 11px var(--en);color:var(--teal)}
+.toc .t{font-weight:600;font-size:14.5px;transition:color .2s}
+.toc .t span{display:block;font:400 11px var(--en);color:var(--mute);direction:ltr;text-align:right;margin-top:2px}
+.toc .p{font:500 12px var(--en);text-align:left;color:var(--ink2)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:14px;padding-top:16px}
+.thumbs button{display:flex;flex-direction:column;align-items:center;gap:6px}
+.thumbs img{width:100%;aspect-ratio:210/297;object-fit:cover;background:#F2F0EC;box-shadow:0 2px 8px rgba(0,0,0,.12);border:2px solid transparent;transition:border-color .2s}
+.thumbs button.cur img{border-color:var(--teal)}
+.thumbs span{font:500 11px var(--en);color:var(--mute)}
+
+/* zoom */
+.zoom{position:fixed;inset:0;background:#1A1C1D;z-index:40;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+.zoom.on{display:block}
+.zoom .zin{display:flex;flex-direction:column;align-items:center;gap:18px;padding:70px 16px 40px}
+.zoom img{width:min(1500px,100%);height:auto;background:#fff}
+.zoom .x{position:fixed;top:14px;left:14px;background:#fff;z-index:2}
+.zoom .zl{position:fixed;top:20px;right:20px;color:#cfd3d4;font:500 13px var(--ar)}
+
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:all .25s;z-index:50;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+.hint{position:fixed;bottom:78px;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(17,19,20,.82);color:#fff;font-size:12.5px;padding:8px 16px;border-radius:18px;z-index:15;transition:opacity .5s;pointer-events:none}
+
+@media (max-width:820px){
+  .top{padding:0 10px;gap:4px}
+  .top .ttl{display:none}
+  .tbtn{padding:0 9px}
+  .tbtn .lbl{display:none}
+  .sec{display:none}
+  .bottom{padding:0 14px;gap:12px}
+  .count{min-width:auto}
+  .arrow{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <img class="logo" src="logo.png" alt="BOX DESIGN">
+  <div class="ttl"><b>الملف التعريفي وكتالوج الأبواب</b><span>E-MAGAZINE · 2026</span></div>
+  <div class="sp"></div>
+  <button class="tbtn" id="bToc" aria-label="المحتويات"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span class="lbl">المحتويات</span></button>
+  <button class="tbtn" id="bThumbs" aria-label="الصفحات"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><span class="lbl">الصفحات</span></button>
+  <button class="tbtn" id="bZoom" aria-label="تكبير"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2M11 8v6M8 11h6"/></svg><span class="lbl">تكبير</span></button>
+  <button class="tbtn" id="bFull" aria-label="ملء الشاشة"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="lbl">ملء الشاشة</span></button>
+  <button class="tbtn primary" id="bDl" hidden aria-label="تحميل PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span class="lbl">تحميل PDF</span></button>
+</header>
+
+<main class="stage" id="stage">
+  <button class="arrow prev" id="aPrev" aria-label="الصفحة السابقة"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+  <div id="host"></div>
+  <button class="arrow next" id="aNext" aria-label="الصفحة التالية"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+</main>
+
+<footer class="bottom">
+  <div class="count" id="count"></div>
+  <input class="range" id="range" type="range" min="1" max="30" value="1" aria-label="الانتقال إلى صفحة">
+  <div class="sec" id="sec"></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="dToc" aria-label="المحتويات">
+  <div class="dh"><h2><span>CONTENTS</span>المحتويات</h2><button class="x" data-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="db toc" id="tocList"></div>
+</aside>
+<aside class="drawer wide" id="dThumbs" aria-label="الصفحات">
+  <div class="dh"><h2><span>ALL PAGES</span>كل الصفحات</h2><button class="x" data-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="db"><div class="thumbs" id="thumbList"></div></div>
+</aside>
+<div class="zoom" id="zoom"><button class="x" id="zClose" aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="zl" id="zLabel"></div><div class="zin" id="zIn"></div></div>
+<div class="toast" id="toast"></div>
+<div class="hint" id="hint">اضغط على الصفحة أو اسحب لتقليب المجلة</div>
+
+<script>
+(function(){
+"use strict";
+var N = 30, ASPECT = 210/297, LEAVES = Math.ceil(N/2);
+var LINKS = {"2":[{"x":43.83,"y":23.07,"w":49.54,"h":4.81,"page":3},{"x":43.83,"y":27.88,"w":49.54,"h":4.9,"page":4},{"x":43.83,"y":32.78,"w":49.54,"h":4.81,"page":5},{"x":43.83,"y":37.59,"w":49.54,"h":4.81,"page":6},{"x":43.83,"y":42.4,"w":49.54,"h":4.81,"page":8},{"x":43.83,"y":47.21,"w":49.54,"h":4.81,"page":9},{"x":43.83,"y":52.02,"w":49.54,"h":4.81,"page":16},{"x":43.83,"y":56.83,"w":49.54,"h":4.81,"page":23},{"x":43.83,"y":61.64,"w":49.54,"h":4.81,"page":24},{"x":43.83,"y":66.46,"w":49.54,"h":4.81,"page":25},{"x":43.83,"y":71.27,"w":49.54,"h":4.81,"page":26},{"x":43.83,"y":76.08,"w":49.54,"h":4.81,"page":27},{"x":43.83,"y":80.89,"w":49.54,"h":4.81,"page":28},{"x":43.83,"y":85.7,"w":49.54,"h":4.81,"page":29},{"x":43.83,"y":90.51,"w":49.54,"h":4.9,"page":30}],"8":[{"x":51.9,"y":20.85,"w":41.47,"h":71.71,"page":9},{"x":6.64,"y":20.85,"w":41.47,"h":71.71,"page":16}],"27":[{"x":6.64,"y":77.86,"w":21.93,"h":10.07,"url":"https://qr.saudibusiness.gov.sa/viewqr/ZEhwV3gxdzcwUjc3dnZHY1JRbGZVOUlpQzlXSjBZcm5xNVR4MmZtSkFncy9Yb1dvcUV1S2kyUlh3ZnFJUHVqTQ=="}],"30":[{"x":6.64,"y":36.52,"w":13.36,"h":1.69,"url":"https://bxdesign.net/"},{"x":6.64,"y":42.4,"w":12.73,"h":1.69,"url":"https://wa.me/966567101790"},{"x":21.64,"y":42.85,"w":11.09,"h":1.16,"url":"tel:+966567101790"},{"x":6.64,"y":48.19,"w":12.86,"h":1.69,"url":"tel:+966563721790"},{"x":19.63,"y":54.52,"w":6.93,"h":1.16,"url":"https://www.instagram.com/bxdesign"},{"x":27.57,"y":54.52,"w":4.29,"h":1.16,"url":"https://www.tiktok.com/@bxdesign"},{"x":32.86,"y":54.52,"w":6.43,"h":1.16,"url":"https://www.snapchat.com/add/bxdesign"},{"x":40.3,"y":54.52,"w":5.55,"h":1.16,"url":"https://linktr.ee/bxdesign"},{"x":6.64,"y":60.04,"w":54.46,"h":1.6,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA"},{"x":67.03,"y":75.81,"w":26.35,"h":12.74,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA"},{"x":36.9,"y":75.81,"w":26.35,"h":12.74,"url":"https://wa.me/966567101790"},{"x":6.64,"y":75.81,"w":26.35,"h":12.74,"url":"https://bxdesign.net/"}]};
+var SECTIONS = [
+  [1,"","الغلاف","Cover"],[2,"","المحتويات","Contents"],[3,"—","كلمة الإدارة","A Word From Us"],
+  [4,"01","من نحن","About Us"],[5,"02","الرؤية والرسالة والقيم","Vision, Mission & Values"],
+  [6,"03","القدرات الصناعية","Manufacturing"],[8,"04","مجموعة المنتجات","Our Collection"],
+  [9,"A","الأبواب الخارجية","Exterior Doors"],[16,"B","الأبواب الداخلية","Interior Doors"],
+  [23,"05","الخامات والتفاصيل","Materials & Details"],[24,"06","دليل الألوان","Color Guide"],
+  [25,"07","المشاريع والاعتمادات","Projects & Approvals"],[26,"08","قالوا عنا","Client Reviews"],
+  [27,"09","الشهادات والتراخيص","Certificates & Licenses"],[28,"10","شركاء النجاح","Partners"],
+  [29,"11","لماذا بكس ديزاين؟","Why BOX DESIGN"],[30,"12","تواصل معنا","Contact"]
+];
+function src(n){ return "pages/p-" + (n<10?"0":"") + n + ".jpg"; }
+function thumb(n){ return "thumbs/t-" + (n<10?"0":"") + n + ".jpg"; }
+function $(id){ return document.getElementById(id); }
+
+var host = $("host"), stage = $("stage");
+var mode = null, pos = 0, page = 1, busy = false, pw = 0, ph = 0;
+var leaves = [], loaded = {};
+
+/* ---------- image loading ---------- */
+function load(n){
+  if (n < 1 || n > N) return;
+  var imgs = host.querySelectorAll('img[data-n="' + n + '"]');
+  for (var i = 0; i < imgs.length; i++){
+    var im = imgs[i];
+    if (!im.getAttribute("src")){
+      im.onload = function(){ this.classList.add("ok"); };
+      im.src = src(n);
+    }
+  }
+  loaded[n] = true;
+}
+function loadAround(n){ for (var k = n - 2; k <= n + 4; k++) load(k); }
+function loadAllIdle(){
+  var k = 1;
+  (function step(){ if (k > N) return; load(k++); setTimeout(step, 180); })();
+}
+
+/* ---------- page face (image + hotspots) ---------- */
+function faceHTML(n){
+  if (n > N) return "";
+  var h = '<img data-n="' + n + '" alt="صفحة ' + n + '" draggable="false">';
+  var L = LINKS[n] || [];
+  for (var i = 0; i < L.length; i++){
+    var l = L[i], st = 'right:auto;left:' + l.x + '%;top:' + l.y + '%;width:' + l.w + '%;height:' + l.h + '%';
+    if (l.url){
+      h += '<a class="hot" href="' + l.url + '" target="_blank" rel="noopener" style="' + st + '" aria-label="رابط"></a>';
+    } else {
+      h += '<a class="hot" href="#page-' + l.page + '" data-goto="' + l.page + '" style="' + st + '" aria-label="انتقل إلى صفحة ' + l.page + '"></a>';
+    }
+  }
+  return h + '<div class="shade"></div>';
+}
+
+/* ---------- layout ---------- */
+function measure(){
+  var w = stage.clientWidth, h = stage.clientHeight;
+  var spread = (w / h) > 1.02 && w >= 720;
+  var padW = spread ? 150 : 24, padH = spread ? 40 : 20;
+  var aw = Math.max(200, w - padW), ah = Math.max(200, h - padH);
+  if (spread){ ph = Math.min(ah, aw / (2 * ASPECT)); }
+  else { ph = Math.min(ah, aw / ASPECT); }
+  pw = Math.floor(ph * ASPECT); ph = Math.floor(pw / ASPECT);
+  return spread ? "spread" : "single";
+}
+
+function build(){
+  var m = measure();
+  var cur = currentPage();
+  mode = m;
+  host.innerHTML = "";
+  leaves = [];
+  if (mode === "spread"){
+    var book = document.createElement("div");
+    book.className = "book"; book.id = "book";
+    book.style.width = (2 * pw) + "px"; book.style.height = ph + "px";
+    for (var k = 0; k < LEAVES; k++){
+      var leaf = document.createElement("div");
+      leaf.className = "leaf";
+      var f = 2 * k + 1, b = 2 * k + 2;
+      leaf.innerHTML = '<div class="face front" data-side="front">' + faceHTML(f) + '</div>' +
+                       '<div class="face back' + (b > N ? ' blank' : '') + '" data-side="back">' + faceHTML(b) + '</div>';
+      book.appendChild(leaf); leaves.push(leaf);
+    }
+    host.appendChild(book);
+    pos = cur <= 1 ? 0 : Math.min(LEAVES, Math.floor(cur / 2));
+    for (var j = 0; j < LEAVES; j++){
+      leaves[j].style.transition = "none";
+      leaves[j].style.transform = j < pos ? "rotateY(180deg)" : "rotateY(0deg)";
+    }
+    restack(); place(true);
+    void book.offsetWidth;
+    for (var q = 0; q < LEAVES; q++) leaves[q].style.transition = "";
+  } else {
+    var s = document.createElement("div");
+    s.className = "single"; s.id = "single";
+    s.style.width = pw + "px"; s.style.height = ph + "px";
+    s.innerHTML = '<div class="pg" id="pgA">' + faceHTML(cur) + '</div>';
+    host.appendChild(s);
+    page = cur;
+  }
+  loaded = {};
+  loadAround(currentPage());
+  update();
+}
+
+function restack(){
+  for (var k = 0; k < LEAVES; k++){
+    leaves[k].style.zIndex = k < pos ? (k + 1) : (LEAVES - k + 1);
+  }
+}
+function place(instant){
+  var book = $("book"); if (!book) return;
+  if (instant) book.style.transition = "none";
+  var shift = 0;
+  book.classList.remove("closed-start", "closed-end");
+  if (pos === 0){ shift = pw / 2; book.classList.add("closed-start"); }
+  else if (pos === LEAVES && N % 2 === 0){ shift = -pw / 2; book.classList.add("closed-end"); }
+  book.style.transform = "translateX(" + shift + "px)";
+  if (instant){ void book.offsetWidth; book.style.transition = ""; }
+}
+
+/* ---------- state ---------- */
+function currentPage(){
+  if (mode === "spread") return pos === 0 ? 1 : Math.min(N, 2 * pos);
+  if (mode === "single") return page;
+  var m = /^#page-(\d+)$/.exec(location.hash || "");
+  return m ? Math.max(1, Math.min(N, +m[1])) : 1;
+}
+function visiblePages(){
+  if (mode === "single") return [page];
+  if (pos === 0) return [1];
+  var r = 2 * pos, l = 2 * pos + 1, out = [];
+  if (r <= N) out.push(r);
+  if (l <= N) out.push(l);
+  return out;
+}
+function sectionOf(n){
+  var s = SECTIONS[0];
+  for (var i = 0; i < SECTIONS.length; i++) if (SECTIONS[i][0] <= n) s = SECTIONS[i];
+  return s;
+}
+function update(){
+  var v = visiblePages(), cur = v[0];
+  $("count").innerHTML = 'صفحة <b>' + v.join("–") + '</b> من ' + N;
+  $("range").value = cur;
+  var s = sectionOf(cur); $("sec").textContent = s[2];
+  var atStart = mode === "spread" ? pos === 0 : page === 1;
+  var atEnd = mode === "spread" ? pos === LEAVES : page === N;
+  $("aPrev").disabled = atStart; $("aNext").disabled = atEnd;
+  try { history.replaceState(null, "", "#page-" + cur); } catch (e) {}
+  var tb = $("thumbList").children;
+  for (var i = 0; i < tb.length; i++) tb[i].classList.toggle("cur", v.indexOf(i + 1) >= 0);
+}
+
+/* ---------- navigation: spread ---------- */
+function flipTo(target){
+  target = Math.max(0, Math.min(LEAVES, target));
+  if (target === pos || busy) return;
+  busy = true;
+  var fwd = target > pos, steps = Math.abs(target - pos), dur = 780, gap = steps > 1 ? 110 : 0;
+  var list = [];
+  if (fwd) for (var k = pos; k < target; k++) list.push(k);
+  else for (var k2 = pos - 1; k2 >= target; k2--) list.push(k2);
+  loadAround(fwd ? 2 * target : Math.max(1, 2 * target));
+  list.forEach(function(k, i){
+    setTimeout(function(){
+      var lf = leaves[k];
+      lf.style.zIndex = LEAVES + 10 + i;
+      lf.classList.add("moving");
+      lf.style.transform = fwd ? "rotateY(180deg)" : "rotateY(0deg)";
+      setTimeout(function(){ lf.classList.remove("moving"); }, dur);
+    }, i * gap);
+  });
+  pos = target;
+  place(false);
+  update();
+  setTimeout(function(){ restack(); busy = false; }, dur + gap * (steps - 1) + 30);
+}
+
+/* ---------- navigation: single ---------- */
+function showSingle(n, dir){
+  n = Math.max(1, Math.min(N, n));
+  if (n === page || busy) return;
+  busy = true;
+  var s = $("single"), old = $("pgA");
+  var fresh = document.createElement("div");
+  fresh.className = "pg"; fresh.innerHTML = faceHTML(n);
+  var oldPage = page; page = n;
+  if (dir === undefined) dir = n > oldPage ? 1 : -1;
+  if (dir > 0){
+    s.insertBefore(fresh, old);
+    load(n); loadAround(n);
+    var a = old.animate([{transform:"rotateY(0deg)"},{transform:"rotateY(180deg)"}], {duration:650, easing:"cubic-bezier(.32,.08,.22,1)"});
+    a.onfinish = function(){ old.remove(); fresh.id = "pgA"; busy = false; };
+  } else {
+    s.appendChild(fresh);
+    load(n); loadAround(n);
+    var b = fresh.animate([{transform:"rotateY(180deg)"},{transform:"rotateY(0deg)"}], {duration:650, easing:"cubic-bezier(.32,.08,.22,1)"});
+    b.onfinish = function(){ old.remove(); fresh.id = "pgA"; busy = false; };
+  }
+  wireLoad(fresh);
+  update();
+}
+function wireLoad(el){
+  var ims = el.querySelectorAll("img");
+  for (var i = 0; i < ims.length; i++){
+    var im = ims[i], n = +im.getAttribute("data-n");
+    im.onload = function(){ this.classList.add("ok"); };
+    im.src = src(n);
+    if (im.complete) im.classList.add("ok");
+  }
+}
+
+function next(){ if (mode === "spread") flipTo(pos + 1); else showSingle(page + 1, 1); hideHint(); }
+function prev(){ if (mode === "spread") flipTo(pos - 1); else showSingle(page - 1, -1); hideHint(); }
+function goPage(n){
+  n = Math.max(1, Math.min(N, n));
+  if (mode === "spread") flipTo(n <= 1 ? 0 : Math.floor(n / 2));
+  else showSingle(n);
+}
+
+/* ---------- events ---------- */
+host.addEventListener("click", function(e){
+  var a = e.target.closest("a.hot");
+  if (a){
+    var g = a.getAttribute("data-goto");
+    if (g){ e.preventDefault(); goPage(+g); }
+    return;
+  }
+  var face = e.target.closest(".face, .pg");
+  if (!face) return;
+  if (mode === "spread"){
+    if (face.getAttribute("data-side") === "front") next(); else prev();
+  } else {
+    var r = face.getBoundingClientRect();
+    if (e.clientX < r.left + r.width / 2) next(); else prev();
+  }
+});
+$("aNext").onclick = next;
+$("aPrev").onclick = prev;
+$("range").addEventListener("change", function(){ goPage(+this.value); });
+$("range").addEventListener("input", function(){
+  var s = sectionOf(+this.value); $("sec").textContent = s[2];
+  $("count").innerHTML = 'صفحة <b>' + this.value + '</b> من ' + N;
+});
+document.addEventListener("keydown", function(e){
+  if ($("zoom").classList.contains("on")){ if (e.key === "Escape") closeZoom(); return; }
+  if (e.key === "Escape"){ closeDrawers(); return; }
+  if (e.key === "ArrowLeft"){ next(); e.preventDefault(); }
+  else if (e.key === "ArrowRight"){ prev(); e.preventDefault(); }
+  else if (e.key === "Home"){ goPage(1); }
+  else if (e.key === "End"){ goPage(N); }
+});
+var tx = null, ty = 0;
+stage.addEventListener("touchstart", function(e){ if (e.touches.length === 1){ tx = e.touches[0].clientX; ty = e.touches[0].clientY; } else tx = null; }, {passive:true});
+stage.addEventListener("touchend", function(e){
+  if (tx === null) return;
+  var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+  tx = null;
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3){
+    e.preventDefault();
+    if (dx > 0) next(); else prev();
+  }
+});
+window.addEventListener("hashchange", function(){
+  var m = /^#page-(\d+)$/.exec(location.hash || "");
+  if (m && +m[1] !== currentPage()) goPage(+m[1]);
+});
+var rT = null;
+window.addEventListener("resize", function(){
+  clearTimeout(rT);
+  rT = setTimeout(function(){ if (!busy) build(); }, 160);
+});
+
+/* ---------- drawers ---------- */
+function openDrawer(id){ closeDrawers(); $(id).classList.add("on"); $("scrim").classList.add("on"); }
+function closeDrawers(){ ["dToc", "dThumbs"].forEach(function(i){ $(i).classList.remove("on"); }); $("scrim").classList.remove("on"); }
+$("bToc").onclick = function(){ openDrawer("dToc"); };
+$("bThumbs").onclick = function(){
+  var imgs = $("thumbList").querySelectorAll("img[data-src]");
+  for (var i = 0; i < imgs.length; i++){ imgs[i].src = imgs[i].getAttribute("data-src"); imgs[i].removeAttribute("data-src"); }
+  openDrawer("dThumbs");
+};
+$("scrim").onclick = closeDrawers;
+Array.prototype.forEach.call(document.querySelectorAll("[data-close]"), function(b){ b.onclick = closeDrawers; });
+
+var tl = "";
+SECTIONS.forEach(function(s){
+  if (s[0] <= 2) return;
+  tl += '<a data-goto="' + s[0] + '"><span class="n">' + s[1] + '</span><span class="t">' + s[2] + '<span>' + s[3] + '</span></span><span class="p">' + (s[0] < 10 ? "0" : "") + s[0] + '</span></a>';
+});
+$("tocList").innerHTML = tl;
+$("tocList").addEventListener("click", function(e){
+  var a = e.target.closest("[data-goto]"); if (!a) return;
+  closeDrawers(); setTimeout(function(){ goPage(+a.getAttribute("data-goto")); }, 200);
+});
+var th = "";
+for (var i = 1; i <= N; i++) th += '<button data-goto="' + i + '"><img data-src="' + thumb(i) + '" alt="صفحة ' + i + '"><span>' + i + '</span></button>';
+$("thumbList").innerHTML = th;
+$("thumbList").addEventListener("click", function(e){
+  var b = e.target.closest("[data-goto]"); if (!b) return;
+  closeDrawers(); setTimeout(function(){ goPage(+b.getAttribute("data-goto")); }, 200);
+});
+
+/* ---------- zoom ---------- */
+function openZoom(){
+  var v = visiblePages().slice().sort(function(a, b){ return a - b; });
+  var h = "";
+  v.forEach(function(n){ h += '<img src="' + src(n) + '" alt="صفحة ' + n + '">'; });
+  $("zIn").innerHTML = h;
+  $("zLabel").textContent = "صفحة " + v.join("–");
+  $("zoom").classList.add("on"); $("zoom").scrollTop = 0;
+}
+function closeZoom(){ $("zoom").classList.remove("on"); $("zIn").innerHTML = ""; }
+$("bZoom").onclick = openZoom;
+$("zClose").onclick = closeZoom;
+
+/* ---------- fullscreen ---------- */
+$("bFull").onclick = function(){
+  try {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else { var p = document.documentElement.requestFullscreen(); if (p && p.catch) p.catch(function(){ toast("ملء الشاشة غير متاح هنا"); }); }
+  } catch (e) { toast("ملء الشاشة غير متاح هنا"); }
+};
+
+/* ---------- toast / hint ---------- */
+var tT = null;
+function toast(msg){ var t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tT); tT = setTimeout(function(){ t.classList.remove("on"); }, 2600); }
+var hintGone = false;
+function hideHint(){ if (hintGone) return; hintGone = true; $("hint").style.opacity = 0; }
+setTimeout(hideHint, 6000);
+
+/* ---------- PDF download (platform capability, shown only when available) ---------- */
+var dl = null;
+function initDownloads(){
+  try {
+    if (!window.claude){ $("bDl").hidden = false; return; }
+    if (window.claude && typeof window.claude.use === "function"){
+      window.claude.use("downloads").then(function(ns){ if (ns){ dl = ns; $("bDl").hidden = false; } }, function(){});
+    }
+  } catch (e) {}
+}
+$("bDl").onclick = function(){
+  if (!dl){
+    if (window.claude) return;
+    var a = document.createElement("a");
+    a.href = "BOXDESIGN-catalog-2026.pdf"; a.download = "BOXDESIGN-catalog-2026.pdf";
+    document.body.appendChild(a); a.click(); a.remove(); return;
+  }
+  toast("جار تجهيز ملف PDF…");
+  fetch("BOXDESIGN-catalog-2026.pdf").then(function(r){ if (!r.ok) throw 0; return r.blob(); })
+    .then(function(b){ return dl.save({filename:"BOXDESIGN-catalog-2026.pdf", data:b}); })
+    .then(function(){ toast("تم تحميل الملف"); })
+    .catch(function(e){ if (e && e.code === "declined") return; toast("تعذر التحميل الآن"); });
+};
+
+build();
+setTimeout(initDownloads, 0);
+window.addEventListener("load", function(){ setTimeout(loadAllIdle, 800); });
+})();
+</script>
+</body>
+</html>
