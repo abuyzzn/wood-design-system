@@ -140,7 +140,7 @@ img{display:block;user-select:none;-webkit-user-drag:none}
 
 <footer class="bottom">
   <div class="count" id="count"></div>
-  <input class="range" id="range" type="range" min="1" max="31" value="1" aria-label="الانتقال إلى صفحة">
+  <input class="range" id="range" type="range" min="1" max="34" value="1" aria-label="الانتقال إلى صفحة">
   <div class="sec" id="sec"></div>
 </footer>
 
@@ -160,17 +160,18 @@ img{display:block;user-select:none;-webkit-user-drag:none}
 <script>
 (function(){
 "use strict";
-var N = 31, ASPECT = 210/297, LEAVES = Math.ceil(N/2), MAXPOS = (N % 2 === 0) ? LEAVES : LEAVES - 1;
-var LINKS = {"2":[{"x":43.83,"y":23.07,"w":49.54,"h":4.81,"page":3},{"x":43.83,"y":27.88,"w":49.54,"h":4.9,"page":4},{"x":43.83,"y":32.78,"w":49.54,"h":4.81,"page":5},{"x":43.83,"y":37.59,"w":49.54,"h":4.81,"page":6},{"x":43.83,"y":42.4,"w":49.54,"h":4.81,"page":8},{"x":43.83,"y":47.21,"w":49.54,"h":4.81,"page":9},{"x":43.83,"y":52.02,"w":49.54,"h":4.81,"page":16},{"x":43.83,"y":56.83,"w":49.54,"h":4.81,"page":23},{"x":43.83,"y":61.64,"w":49.54,"h":4.81,"page":24},{"x":43.83,"y":66.46,"w":49.54,"h":4.81,"page":25},{"x":43.83,"y":71.27,"w":49.54,"h":4.81,"page":26},{"x":43.83,"y":76.08,"w":49.54,"h":4.81,"page":27},{"x":43.83,"y":80.89,"w":49.54,"h":4.81,"page":29},{"x":43.83,"y":85.7,"w":49.54,"h":4.81,"page":30},{"x":43.83,"y":90.51,"w":49.54,"h":4.9,"page":31}],"8":[{"x":51.9,"y":20.85,"w":41.47,"h":71.71,"page":9},{"x":6.64,"y":20.85,"w":41.47,"h":71.71,"page":16}],"27":[{"x":55.3,"y":49.44,"w":4.29,"h":2.67,"url":"https://industry.sa/#/license/view/134536"},{"x":24.67,"y":28.95,"w":5.42,"h":3.92,"url":"https://salamah.998.gov.sa/#/public/certificate-details?code=4PEg5a7yZwjygiBuGzAa0Q"},{"x":24.8,"y":52.83,"w":5.04,"h":3.56,"url":"https://salamah.998.gov.sa/#/public/permit-location?code=4PEg5a7yZwjygiBuGzAa0Q"}],"28":[{"x":6.64,"y":77.86,"w":21.93,"h":10.07,"url":"https://qr.saudibusiness.gov.sa/viewqr/ZEhwV3gxdzcwUjc3dnZHY1JRbGZVOUlpQzlXSjBZcm5xNVR4MmZtSkFncy9Yb1dvcUV1S2kyUlh3ZnFJUHVqTQ=="}],"31":[{"x":11.43,"y":35.72,"w":13.24,"h":1.69,"url":"https://bxdesign.net/"},{"x":11.43,"y":41.33,"w":12.73,"h":1.69,"url":"https://wa.me/966567101790"},{"x":11.43,"y":47.04,"w":12.86,"h":1.69,"url":"tel:+966563721790"},{"x":24.42,"y":53.09,"w":6.93,"h":1.16,"url":"https://www.instagram.com/bxdesign"},{"x":32.36,"y":53.09,"w":4.16,"h":1.16,"url":"https://www.tiktok.com/@bxdesign"},{"x":37.65,"y":53.09,"w":6.43,"h":1.16,"url":"https://www.snapchat.com/add/bxdesign"},{"x":45.09,"y":53.09,"w":5.55,"h":1.16,"url":"https://linktr.ee/bxdesign"},{"x":11.43,"y":58.35,"w":34.92,"h":1.43,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA?g_st=ic"},{"x":65.39,"y":74.03,"w":23.19,"h":13.81,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA?g_st=ic"},{"x":38.41,"y":74.03,"w":23.19,"h":13.81,"url":"https://wa.me/966567101790"},{"x":11.43,"y":74.03,"w":23.19,"h":13.81,"url":"https://bxdesign.net/"}]};
+var N = 34, ASPECT = 210/297, LEAVES = Math.ceil(N/2), MAXPOS = (N % 2 === 0) ? LEAVES : LEAVES - 1;
+var LINKS = {"2":[{"x":43.83,"y":23.07,"w":49.54,"h":4.81,"page":3},{"x":43.83,"y":27.88,"w":49.54,"h":4.9,"page":4},{"x":43.83,"y":32.78,"w":49.54,"h":4.81,"page":6},{"x":43.83,"y":37.59,"w":49.54,"h":4.81,"page":7},{"x":43.83,"y":42.4,"w":49.54,"h":4.81,"page":9},{"x":43.83,"y":47.21,"w":49.54,"h":4.81,"page":10},{"x":43.83,"y":52.02,"w":49.54,"h":4.81,"page":17},{"x":43.83,"y":56.83,"w":49.54,"h":4.81,"page":24},{"x":43.83,"y":61.64,"w":49.54,"h":4.81,"page":25},{"x":43.83,"y":66.46,"w":49.54,"h":4.81,"page":26},{"x":43.83,"y":71.27,"w":49.54,"h":4.81,"page":27},{"x":43.83,"y":76.08,"w":49.54,"h":4.81,"page":30},{"x":43.83,"y":80.89,"w":49.54,"h":4.81,"page":32},{"x":43.83,"y":85.7,"w":49.54,"h":4.81,"page":33},{"x":43.83,"y":90.51,"w":49.54,"h":4.9,"page":34}],"5":[{"x":63.12,"y":91.67,"w":30.25,"h":1.6,"page":27}],"9":[{"x":51.9,"y":20.85,"w":41.47,"h":71.71,"page":10},{"x":6.64,"y":20.85,"w":41.47,"h":71.71,"page":17}],"30":[{"x":55.3,"y":49.44,"w":4.29,"h":2.67,"url":"https://industry.sa/#/license/view/134536"},{"x":24.67,"y":28.95,"w":5.42,"h":3.92,"url":"https://salamah.998.gov.sa/#/public/certificate-details?code=4PEg5a7yZwjygiBuGzAa0Q"},{"x":24.8,"y":52.83,"w":5.04,"h":3.56,"url":"https://salamah.998.gov.sa/#/public/permit-location?code=4PEg5a7yZwjygiBuGzAa0Q"}],"31":[{"x":6.64,"y":77.86,"w":21.93,"h":10.07,"url":"https://qr.saudibusiness.gov.sa/viewqr/ZEhwV3gxdzcwUjc3dnZHY1JRbGZVOUlpQzlXSjBZcm5xNVR4MmZtSkFncy9Yb1dvcUV1S2kyUlh3ZnFJUHVqTQ=="},{"x":10.43,"y":77.86,"w":14.37,"h":10.07,"url":"https://qr.saudibusiness.gov.sa/viewqr/ZEhwV3gxdzcwUjc3dnZHY1JRbGZVOUlpQzlXSjBZcm5xNVR4MmZtSkFncy9Yb1dvcUV1S2kyUlh3ZnFJUHVqTQ=="}],"34":[{"x":11.43,"y":35.72,"w":13.24,"h":1.69,"url":"https://bxdesign.net/"},{"x":11.43,"y":41.33,"w":12.73,"h":1.69,"url":"https://wa.me/966567101790"},{"x":11.43,"y":47.04,"w":12.86,"h":1.69,"url":"tel:+966563721790"},{"x":24.42,"y":53.09,"w":6.93,"h":1.16,"url":"https://www.instagram.com/bxdesign"},{"x":32.36,"y":53.09,"w":4.16,"h":1.16,"url":"https://www.tiktok.com/@bxdesign"},{"x":37.65,"y":53.09,"w":6.43,"h":1.16,"url":"https://www.snapchat.com/add/bxdesign"},{"x":45.09,"y":53.09,"w":5.55,"h":1.16,"url":"https://linktr.ee/bxdesign"},{"x":11.43,"y":58.35,"w":34.92,"h":1.43,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA?g_st=ic"},{"x":65.39,"y":74.03,"w":23.19,"h":13.81,"url":"https://maps.app.goo.gl/gMtNEnYmnfihwuYeA?g_st=ic"},{"x":38.41,"y":74.03,"w":23.19,"h":13.81,"url":"https://wa.me/966567101790"}]};
 var SECTIONS = [
   [1,"","الغلاف","Cover"],[2,"","المحتويات","Contents"],[3,"—","كلمة الإدارة","A Word From Us"],
-  [4,"01","من نحن","About Us"],[5,"02","الرؤية والرسالة والقيم","Vision, Mission & Values"],
-  [6,"03","القدرات الصناعية","Manufacturing"],[8,"04","مجموعة المنتجات","Our Collection"],
-  [9,"A","الأبواب الخارجية","Exterior Doors"],[16,"B","الأبواب الداخلية","Interior Doors"],
-  [23,"05","الخامات والتفاصيل","Materials & Details"],[24,"06","دليل الألوان","Color Guide"],
-  [25,"07","المشاريع والاعتمادات","Projects & Approvals"],[26,"08","قالوا عنا","Client Reviews"],
-  [27,"09","الشهادات والتراخيص","Certificates & Licenses"],[29,"10","شركاء النجاح","Partners"],
-  [30,"11","لماذا بكس ديزاين؟","Why BOX DESIGN"],[31,"12","تواصل معنا","Contact"]
+  [4,"01","من نحن","About Us"],[5,"—","ماذا قال عملاء بكس ديزاين","What Our Clients Say"],
+  [6,"02","الرؤية والرسالة والقيم","Vision, Mission & Values"],
+  [7,"03","القدرات الصناعية","Manufacturing"],[9,"04","مجموعة المنتجات","Our Collection"],
+  [10,"A","الأبواب الخارجية","Exterior Doors"],[17,"B","الأبواب الداخلية","Interior Doors"],
+  [24,"05","الخامات والتفاصيل","Materials & Details"],[25,"06","دليل الألوان","Color Guide"],
+  [26,"07","المشاريع والاعتمادات","Projects & Approvals"],[27,"08","آراء عملاء بكس ديزاين","Client Reviews"],
+  [30,"09","الشهادات والتراخيص","Certificates & Licenses"],[32,"10","شركاء النجاح","Partners"],
+  [33,"11","لماذا بكس ديزاين؟","Why BOX DESIGN"],[34,"12","تواصل معنا","Contact"]
 ];
 function src(n){ return "pages/p-" + (n<10?"0":"") + n + ".jpg"; }
 function thumb(n){ return "thumbs/t-" + (n<10?"0":"") + n + ".jpg"; }
